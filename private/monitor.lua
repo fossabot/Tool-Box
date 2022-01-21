@@ -67,7 +67,7 @@ local function CONNECT_MONITOR(NAME, SET_KICK_REASON, DEFER)
 			-- let client know we are now ready and that they will join within a few secconds
 			MSG(SOURCE, DEFER, 5, "done.... joining within a few seconds", CONFIG.SERVER_NAME, NAME)
 			Wait(2000)
-			exports.connectqueue:SEND_TO_QUEUE(NAME, SET_KICK_REASON, DEFER)
+			exports.connectqueue:SEND_TO_QUEUE(SOURCE, NAME, SET_KICK_REASON, DEFER)
 			-- DEFER.done()
 		else
 			DEFER.done('Je moet op de whitelist staan om hier te kunnen spelen...')
