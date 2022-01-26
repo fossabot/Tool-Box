@@ -109,19 +109,19 @@ function _SESSION:SET_DATA()
 				SAVED_CLIENT_DATA = SQL_EXEC_QUERY('SYNC SELECT * FROM clients WHERE identifiers LIKE ?', { '%'..ID..'%' })
 				if SAVED_CLIENT_DATA[1] ~= nil then break end
 			end
-			if SAVED_CLIENT_DATA[1] ~= nil then break end
+			if (SAVED_CLIENT_DATA and SAVED_CLIENT_DATA[1]) ~= nil then break end
 			Wait(250)
 		end
 
 		-- add the saved data to the session template if it found any otherwise set new client session defaults
 		-- use existing or new client id
-		self.CLIENT_ID = SAVED_CLIENT_DATA[1] ~= nil and SAVED_CLIENT_DATA[1].client_id or 'RPX-'..DT:GENERATE_ID(10)
+		self.CLIENT_ID = (SAVED_CLIENT_DATA and SAVED_CLIENT_DATA[1]) ~= nil and SAVED_CLIENT_DATA[1].client_id or 'RPX-'..DT:GENERATE_ID(10)
 
 		-- use existing or current info
-		self.INFORMATION = SAVED_CLIENT_DATA[1] ~= nil and json.decode(SAVED_CLIENT_DATA[1].INFORMATION) or self.INFORMATION
+		self.INFORMATION = (SAVED_CLIENT_DATA and SAVED_CLIENT_DATA[1]) ~= nil and json.decode(SAVED_CLIENT_DATA[1].INFORMATION) or self.INFORMATION
 		
 		-- use existing or current perms
-		self.PERMISSIONS = SAVED_CLIENT_DATA[1] ~= nil and json.decode(SAVED_CLIENT_DATA[1].perms) or {
+		self.PERMISSIONS = (SAVED_CLIENT_DATA and SAVED_CLIENT_DATA[1]) ~= nil and json.decode(SAVED_CLIENT_DATA[1].perms) or {
 			LEVEL = 1,
 			SSN = '',
 			LABEL = '',
@@ -134,7 +134,7 @@ function _SESSION:SET_DATA()
 		self.PERMISSIONS.OPTIN = false
 
 		-- now for the queue prio we need information from above and use this information while we loop trought the queue levels
-		self.QUEUE = SAVED_CLIENT_DATA[1] ~= nil and json.decode(SAVED_CLIENT_DATA[1].queue) or self.QUEUE
+		self.QUEUE = (SAVED_CLIENT_DATA and SAVED_CLIENT_DATA[1]) ~= nil and json.decode(SAVED_CLIENT_DATA[1].queue) or self.QUEUE
 
 	end
 
