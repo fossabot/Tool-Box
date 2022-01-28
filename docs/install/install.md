@@ -5,33 +5,24 @@
     - version 1.9.3 of oxmysql | [download ->](https://github.com/overextended/oxmysql)
 
 2. **Download**<br>
-    Download the latest version of BabyMonitor, i strongly advice you to create a local git repo and clone it so you can easily update to the latest features.<br>
-    [git beginner tutorial](https://www.youtube.com/watch?v=8JJ101D3knE)
+    - Download the latest version of BabyMonitor, i strongly advice you to create a local git repo and clone it so you can easily update to the latest features.<br>
+    - [new with git?](https://www.youtube.com/watch?v=8JJ101D3knE)
 
 3. **Setup Connectqueue**<br>
-    ConnectQueue will be implemented in the future, for now you need to make a few changes yourself to `path/connectqueue/shared/sh_queue.lua`.
-
-- *Go to line 444, and change the following*
-    ```lua
-    --[[ old ]] local function playerConnect(name, setKickReason, deferrals)
-    --[[ new ]] local function playerConnect(src, name, setKickReason, deferrals) -- playerSrc is added so it knows which player to add
-    ```
-
-- *Go to line 445, and remove the following*
-    ```lua
-    local src = source -- not needed anymore sinds we are passing it as a parameter to the function
-    ```
-
-- *Go to line 653 (for qbcore-framework line 660), and change the following*
-    ```lua
-    --[[ old ]] AddEventHandler("playerConnecting", playerConnect)
-    --[[ new ]] exports('SEND_TO_QUEUE', playerConnect) -- this export will be triggerd from the BabyMonitor resource
-    ```
+    - !!!__backup your current connectqueue resource__!!!
+    - replace it with the one from your version package
 
 4. **qb-core**<br>
-    For the qbcore-framework users goto to the following file `path/qb-core/server/events.lua`.<br>
-    Go to line 43, now remove or comment everything out from line 43 to line 87<br>
-    *NOTE: don't disable any other connection code sinds its needed for handling the player data.*
+    - !!!__backup your current `events.lua` file__!!! within `qb-core/server/`
+    - replace it with the one from your version package
+
+5. **database setup (i'm not responsible for any lost data)**<br>
+    - !!!__backup your database__!!! best practice is to save one with the data and one with clean tables
+    - if you use qbus skip this step otherwise insert the tables from bm-tables.sql within your database
+    - __for qbcore-framework users__
+        - after you made a backup of your current database alter it and delete the tables within
+        - then execute the qb-database.sql file within you database
+        - when you got your new tables setup you can then insert your old data and should be good to go
 
 <hr>
 
