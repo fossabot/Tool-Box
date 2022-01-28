@@ -29,13 +29,4 @@ server_scripts {
 
 }
 
-dependency 'connectqueue' --[[> TODO EVERYONE
-
-	within connectqueue change line 660 to -> exports('SEND_TO_QUEUE', playerConnect)
-	and add the src variable ar parameter to the function
-
-	if you dont want to use connectqueue simply comment line 70 and uncomment 71
-
-	For people working with QBCore comment lines 43 till line 87
-
-]]
+dependency 'connectqueue'
