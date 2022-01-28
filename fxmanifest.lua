@@ -17,12 +17,9 @@ server_scripts {
 	'config/private.lua',
 
 	-- load files which hold classes for the monitoring process
-	'private/classes/__debug.lua',
 	'private/classes/__types.lua',
-	'private/classes/__sql.lua', --[[
-		__sql.lua is not safe and ready to use yet, dont enable it!!!
-	]]
-
+	'private/classes/__debug.lua',
+	'private/classes/__sql.lua',
 	'private/classes/__pool.lua',
 	'private/classes/__session.lua',
 
@@ -32,8 +29,7 @@ server_scripts {
 
 }
 
-dependency 'connectqueue' 
---[[ TODO EVERYONE
+dependency 'connectqueue' --[[> TODO EVERYONE
 
 	within connectqueue change line 660 to -> exports('SEND_TO_QUEUE', playerConnect)
 	and add the src variable ar parameter to the function
