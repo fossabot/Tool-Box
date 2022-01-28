@@ -1,4 +1,4 @@
-# Installation
+# Resource Installation
 
 1. **Requirements**<br>
 - A home or server hosted FiveM server | [how to ->](https://docs.fivem.net/docs/server-manual/setting-up-a-server/)
@@ -32,3 +32,7 @@ local src = source -- not needed anymore sinds we are passing it as a parameter 
 For the qbcore-framework users goto to the following file `path/resource/[qb]/qb-core/server/events.lua`.<br>
 Go to line 43, now remove or comment everything out from line 43 to line 87<br>
 *NOTE: don't disable any other connection code sinds its needed for handling the player data.*
+
+<hr>
+
+### [<-- Go Back](https://github.com/5m1Ly/BabyMonitor)

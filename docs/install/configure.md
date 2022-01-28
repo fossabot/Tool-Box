@@ -1,4 +1,4 @@
-# SQL Class
+# Resource Configuration
 
 <hr>
 
