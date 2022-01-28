@@ -5,7 +5,6 @@ I created the baby monitor project because i was irritated by the fact that it d
 - **Requirements**
 - **Installation**
 - **Configuration**
-- **Framework Edit (only for qbcore-framework users)**
 - **Monitor**
 - **Classes**
   - *datatypes*
@@ -16,11 +15,11 @@ I created the baby monitor project because i was irritated by the fact that it d
   - *sql*
 - **Sources**
 
-### Requirements
+## Requirements
 - A home or server hosted FiveM server | [how to ->](https://docs.fivem.net/docs/server-manual/setting-up-a-server/)
 - version 1.9.3 of oxmysql | [download ->](https://github.com/overextended/oxmysql)
 
-### Installation
+## Installation
 1. **Requirements**<br>
 Make sure that you downloaded and installed the requirements mentioned above.
 
@@ -53,18 +52,17 @@ For the qbcore-framework users goto to the following file `path/resource/[qb]/qb
 Go to line 43, now remove or comment everything out from line 43 to line 87<br>
 *NOTE: don't disable any other connection code sinds its needed for handling the player data.*
 
-### Configuration
-### Framework Edit (only for qbcore-framework users)
-### Monitor
-### Classes
-#### datatypes
-#### debug
-#### message
-#### pool
-#### session
-#### sql
+## Configuration
+## Monitor
+## Classes
+### datatypes
+### debug
+### message
+### pool
+### session
+### sql
 
-### Sources
+## Sources
 One function wihtin the debugger class is a modified function from the [pma-voice](https://github.com/AvarianKnight/pma-voice) resource.
 Two functions within the datatypes class are modified functions from the [Qbus](https://github.com/qbcore-framework) framework.
 The player queue is handeled by a modified version of the [connectqueue](https://github.com/Nick78111/ConnectQueue) resource.
