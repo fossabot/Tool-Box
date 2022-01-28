@@ -22,9 +22,9 @@ server_scripts {
 	'private/classes/__sql.lua',
 	'private/classes/__pool.lua',
 	'private/classes/__session.lua',
+	'private/classes/__msg.lua',
 
 	-- load files which monitor the client data
-	'private/main.lua',
 	'private/monitor.lua'
 
 }
