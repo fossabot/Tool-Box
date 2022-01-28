@@ -1,8 +1,8 @@
 # Resource Installation
 
 1. **Requirements**<br>
-    - A home or server hosted FiveM server | [how to ->](https://docs.fivem.net/docs/server-manual/setting-up-a-server/)
-    - version 1.9.3 of oxmysql | [download ->](https://github.com/overextended/oxmysql)
+    - A home or server hosted FiveM server | [how to](https://docs.fivem.net/docs/server-manual/setting-up-a-server/)
+    - version 1.9.3 of oxmysql | [download](https://github.com/overextended/oxmysql)
 
 2. **Download**<br>
     - Download the latest version of BabyMonitor, i strongly advice you to create a local git repo and clone it so you can easily update to the latest features.<br>
@@ -26,4 +26,7 @@
 
 <hr>
 
-### [<-- Go Back](https://github.com/5m1Ly/BabyMonitor)
+<div style="display:flex;justify-content:space-between;align-items:center;">
+<a href="https://github.com/5m1Ly/BabyMonitor"><h3><-- Go Back</h3></a>
+<a href="https://github.com/5m1Ly/BabyMonitor/blob/master/docs/install/configure.md"><h3>configure --></h3></a>
+</div>
