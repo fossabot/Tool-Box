@@ -70,9 +70,23 @@ function _SESSION:SET_DATA()
 	-- check if an inactive session is found
 	if INACTIVE_SESSION ~= nil then
 
+        local checker = _sql:assign()
+        checker:query('SYNC SELECT COUNT(*) as count FROM clients WHERE client_id = ?')
+
+        local function newId()
+
+            local id = 'RPX-'..DT:GENERATE_ID(10)
+
+            checker:data({ id })
+            local res = checker:exec()
+
+            return res.count > 0 and newId() or id
+
+        end
+
 		-- add the inactive session data to the session template if it found any otherwise set new client session defaults
 		-- use existing or new client id
-		self.CLIENT_ID = INACTIVE_SESSION ~= nil and INACTIVE_SESSION.CLIENT_ID or 'RPX-'..DT:GENERATE_ID(10)
+		self.CLIENT_ID = INACTIVE_SESSION ~= nil and INACTIVE_SESSION.CLIENT_ID or newId()
 
 		-- use existing or current info
 		self.INFORMATION = INACTIVE_SESSION ~= nil and INACTIVE_SESSION.INFORMATION or self.INFORMATION
