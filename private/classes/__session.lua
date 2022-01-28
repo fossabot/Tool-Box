@@ -103,12 +103,18 @@ function _SESSION:SET_DATA()
 
 		self.IDENTIFIERS = NEW_IDS
 
+        local sql = _sql:assign()
+        sql:query('SYNC SELECT * FROM clients WHERE identifiers LIKE ?')
+
 		for _TYPE, _IDS in pairs(self.IDENTIFIERS) do	
 			for i = 1, #_IDS do
-				local ID = _IDS[i]
-				SAVED_CLIENT_DATA = SQL_EXEC_QUERY('SYNC SELECT * FROM clients WHERE identifiers LIKE ?', { '%'..ID..'%' })
-				if SAVED_CLIENT_DATA[1] ~= nil then break end
-			end
+                
+                sql:data({ '%'.._IDS[i]..'%' })
+				SAVED_CLIENT_DATA = sql:exec()
+			
+                if SAVED_CLIENT_DATA[1] ~= nil then break end
+			
+            end
 			if (SAVED_CLIENT_DATA and SAVED_CLIENT_DATA[1]) ~= nil then break end
 			Wait(250)
 		end
@@ -167,31 +173,18 @@ end
 -- save session in the data base
 function _SESSION:SAVE_DATA()
 
-	local SAVE_DATA = {
-		CLIENT_ID 		= self.CLIENT_ID,
-		NAME 			= self.NAME,
-		INFORMATION 	= self.INFORMATION,
-		PERMISSIONS = {
-			LEVEL 		= self.PERMISSIONS.LEVEL, -- holds saved perm level
-			SSN 		= self.PERMISSIONS.SSN, -- holds social security number of character that is optin by default
-		},
-		QUEUE = {
-			WHITELISTED = self.QUEUE.WHITELISTED
-		},
-		IDENTIFIERS = self.IDENTIFIERS
-	}
+    local sql = _sql:assign()
+    sql:query('ASYNC INSERT INTO clients (client_id, name, info, perms, queue, identifiers) VALUES (:clientId, :name, :info, :perms, :queue, :identifiers) ON DUPLICATE KEY UPDATE name = :name, info = :info, perms = :perms, queue = :queue, identifiers = :identifiers')
 
-	-- print to check what we want to save
-	-- DEBUG:LOG(SAVE_DATA)
-
-	-- save actual data
-	MySQL.Async.insert('INSERT INTO clients (client_id, name, info, perms, queue, identifiers) VALUES (:clientId, :name, :info, :perms, :queue, :identifiers) ON DUPLICATE KEY UPDATE name = :name, info = :info, perms = :perms, queue = :queue, identifiers = :identifiers', {
-		clientId = SAVE_DATA.CLIENT_ID,
-		name = SAVE_DATA.NAME,
-		info = json.encode(SAVE_DATA.INFORMATION),
-		perms = json.encode(SAVE_DATA.PERMISSIONS),
-		queue = json.encode(SAVE_DATA.QUEUE),
-		identifiers = json.encode(SAVE_DATA.IDENTIFIERS)
+	sql:data({
+		clientId = self.CLIENT_ID,
+		name = self.NAME,
+		info = self.INFORMATION,
+		perms = { LEVEL = self.PERMISSIONS.LEVEL, SSN = self.PERMISSIONS.SSN },
+		queue = { WHITELISTED = self.QUEUE.WHITELISTED },
+		identifiers = self.IDENTIFIERS
 	})
+
+    sql:exec()
 
 end
