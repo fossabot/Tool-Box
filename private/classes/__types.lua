@@ -1,5 +1,13 @@
 DT = {}
 
+function DT:TABLE_LENGTH(tbl)
+	local ret = 0
+	for k, v in pairs(tbl) do
+		ret = ret + 1
+	end
+	return ret
+end
+
 function DT:GENERATE_ID(LENGTH)
 	if LENGTH <= 0 then return '' end
 	local rand = math.random(0, 1)

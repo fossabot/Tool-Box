@@ -1,20 +1,31 @@
-local function TABLE_LENGTH(tbl)
-	local ret = 0
-	for k, v in pairs(tbl) do
-		ret = ret + 1
-	end
-	return ret
+_DEBUG = {}
+
+-- function to initialize debug mode
+function _DEBUG:INIT()
+    local tbl = { active = CONFIG.DEBUG_MODE }
+    setmetatable(tbl, self)
+    self.__index = self
+    return tbl
 end
+
+function _DEBUG:TOGGLE()
+    self.active = not self.active
+    print('DEBUG MODE TURNED '..( not self.active and '^1OFF^0' or '^2ON^0' ))
+end
+
+RegisterCommand("debug-mode", function()
+    TriggerEvent("toggle:debug-mode")
+end)
 
 -- 2 functions for setting console colors
 -- rgb(red, green, blue)
-local function _RGB(r, g, b)
-	return ('\x1B[38;2;%d;%d;%dm'):format(r, g, b)
+function _DEBUG:RGB(RED, GREEN, BLUE)
+	return ('\x1B[38;2;%d;%d;%dm'):format(RED, GREEN, BLUE)
 end
 
 -- primary, success, info, data, warning, danger
-local function _C(type)
-	local colors = {
+function _DEBUG:COLOR(_TYPE)
+    local COLORS = {
 		['primary'] = vector3(20, 98, 242),
 		['success'] = vector3(29, 199, 106),
 		['info'] 	= vector3(128, 216, 248),
@@ -22,40 +33,44 @@ local function _C(type)
 		['warning'] = vector3(255, 178, 35),
 		['danger'] 	= vector3(225, 24, 68)
 	}
-	return _RGB(colors[type].x, colors[type].y, colors[type].z)
+	return self:RGB(COLORS[_TYPE].x, COLORS[_TYPE].y, COLORS[_TYPE].z)
 end
 
-local function _PRINT(tbl, indent)
-    indent = indent or 0
-	for k, v in pairs(tbl) do
-		local _type = type(v)
-		local tabs = string.rep("    ", indent)
-        local key = ("%s^3%s^0"):format(tabs, k)
-        if _type == "table" then
-			local length = TABLE_LENGTH(v)
+function _DEBUG:PRINT(_TABLE, _INDENT)
+    _INDENT = _INDENT or 0
+	for INDEX, VALUE in pairs(_TABLE) do
+		local TYPE = type(VALUE)
+		local TABSPACE = string.rep("    ", _INDENT)
+        local KEY = ("%s^3%s^0"):format(TABSPACE, INDEX)
+        if TYPE == "table" then
+			local length = DT:TABLE_LENGTH(VALUE)
 			if length > 0 then
-				print(("%s^3 (^5#%d^3): ^4{^0"):format(key, length))
-				_PRINT(v, indent + 1)
-				print(("%s^4}^0"):format(tabs))
+				print(("%s^3 (^5#%d^3): ^4{^0"):format(KEY, length))
+				self:PRINT(VALUE, _INDENT + 1)
+				print(("%s^4}^0"):format(TABSPACE))
 			else
-				print(("%s^3: ^1{ !!empty table!! }^0"):format(key))
+				print(("%s^3: ^1{ !!empty table!! }^0"):format(KEY))
 			end
-        elseif _type == 'boolean' then
-            print(("%s^3:^1 %s ^0"):format(key, v))
-        elseif _type == "function" then
-            print(("%s^3:^9 %s ^0"):format(key, v))
-        elseif _type == 'number' then
-            print(("%s^3:^5 %s ^0"):format(key, v))
-        elseif _type == 'string' then
-            print(("%s^3:^2 '%s' ^0"):format(key, v))
+        elseif TYPE == 'boolean' then
+            print(("%s^3:^1 %s ^0"):format(KEY, VALUE))
+        elseif TYPE == "function" then
+            print(("%s^3:^9 %s ^0"):format(KEY, VALUE))
+        elseif TYPE == 'number' then
+            print(("%s^3:^5 %s ^0"):format(KEY, VALUE))
+        elseif TYPE == 'string' then
+            print(("%s^3:^2 '%s' ^0"):format(KEY, VALUE))
         else
-            print(("%s^3:^2 %s ^0"):format(key, v))
+            print(("%s^3:^2 %s ^0"):format(KEY, VALUE))
         end
 	end
 end
 
-DEBUG = {}
-
-function DEBUG:LOG(table)
-	_PRINT(table)
+function _DEBUG:LOG(_TABLE, _SOURCE, _COLOR)
+    if not self.active then return end -- if statement to toggle debug mode
+    _COLOR = _COLOR ~= nil and _COLOR or "primary"
+    local COLOR = self:COLOR(_COLOR)
+    local SRC_COLOR = self:COLOR('data')
+    print(COLOR.."DEBUG:LOG TRIGGERED FROM "..SRC_COLOR.._SOURCE.."^0")
+    self:PRINT(_TABLE)
+    print(COLOR.."DEBUG:LOG TRIGGERED FROM "..SRC_COLOR.._SOURCE.."^0")
 end

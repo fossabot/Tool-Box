@@ -1,4 +1,5 @@
 CONFIG = {
+    DEBUG_MODE = true,
 	SERVER_NAME = '5 pixel', -- your server name
 	WHITELISTED = true,
     DEFER_STRINGS = {
@@ -27,3 +28,36 @@ CONFIG = {
 		{ LABEL = '1e PRIO', 	BEHAVIOR_SCORE = 40 },
 	}
 }
+
+--[[ english config
+    CONFIG = {
+        DEBUG_MODE = true, -- en/disable debug mode by default
+        SERVER_NAME = '*server name*', -- your server name
+        WHITELISTED = true,
+        DEFER_STRINGS = {
+            TITLE = "Welcome to %s %s, were getting ready for your adventure.", -- msg displayed on top
+            PROCESSES = {
+                "creating session", -- step 1 when connecting
+                "getting/adding data", -- step 2 when connecting
+                "storing session", -- step 3 when connecting
+                "saving session data", -- step 4 when connecting
+                "done.... joining within a few seconds", -- step 5 when connecting
+            },
+            NOT_ON_LIST = "You need to be whitelisted to join this server..." -- kick msg when user doesn't have a whitelist
+        },
+        PERMISSIONS = {
+            { LABEL = 'CITIZEN', 		SHORT_NAME = 'USER' },
+            { LABEL = 'TESTER', 		SHORT_NAME = 'TEST' },
+            { LABEL = 'MODERATOR', 		SHORT_NAME = 'MOD' },
+            { LABEL = 'ADMINISTRATOR', 	SHORT_NAME = 'ADMIN' },
+            { LABEL = 'DEVELOPER', 		SHORT_NAME = 'DEV' },
+        },
+        QUEUE = {
+            { LABEL = 'DEFAULT', 	BEHAVIOR_SCORE = 0 },
+            { LABEL = '4th PRIO', 	BEHAVIOR_SCORE = 10 },
+            { LABEL = '3th PRIO', 	BEHAVIOR_SCORE = 20 },
+            { LABEL = '2th PRIO', 	BEHAVIOR_SCORE = 30 },
+            { LABEL = '1th PRIO', 	BEHAVIOR_SCORE = 40 },
+        }
+    }
+]]

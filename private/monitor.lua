@@ -1,3 +1,9 @@
+local DEBUG = _DEBUG:INIT()
+
+RegisterNetEvent("toggle:debug-mode", function()
+    DEBUG:TOGGLE()
+end)
+
 -- creating pools for active and inactive sessions
 ACTIVE_SESSIONS = _POOL:CREATE()
 INACTIVE_SESSIONS = _POOL:CREATE()
@@ -17,6 +23,8 @@ local function CONNECT_MONITOR(NAME, SET_KICK_REASON, DEFERRALS)
 		local SESSION = _SESSION:START(SOURCE, NAME) -- start a new session		
 		ACTIVE_SESSIONS:ADD_SESSION(SOURCE, SESSION) -- add the session to the active sessions pool
 		Wait(1000)
+
+        DEBUG:LOG(SESSION, "Connect Monitor Function", "info")
 
 		msg:send() -- let client know we are creating its data
 		SESSION:SET_DATA() -- format the session for the client
@@ -39,6 +47,7 @@ local function CONNECT_MONITOR(NAME, SET_KICK_REASON, DEFERRALS)
 		end
 
 	end
+
 end
 
 local function JOIN_MONITOR(TEMP_SOURCE)
