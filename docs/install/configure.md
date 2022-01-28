@@ -22,7 +22,7 @@ When adding perms its important to keep in mind that the last within the list is
 -- !!! DONT USE THIS EXAMPLE !!! ---
 PERMISSIONS = {
     { LABEL = 'Administrator', 	SHORT_NAME = 'ADMIN' }, -- power grade 1
-    { LABEL = 'Citizen', 		SHORT_NAME = 'USER' }, -- power grade 2
+    { LABEL = 'Citizen',        SHORT_NAME = 'USER' }, -- power grade 2
 },
 -- !!! DONT USE THIS EXAMPLE !!! ---
 ```
@@ -30,7 +30,7 @@ PERMISSIONS = {
 This is the correct way of setting the permissions
 ```lua
 PERMISSIONS = {
-    { LABEL = 'Citizen', 		SHORT_NAME = 'USER' }, -- power grade 1
+    { LABEL = 'Citizen',        SHORT_NAME = 'USER' }, -- power grade 1
     { LABEL = 'Administrator', 	SHORT_NAME = 'ADMIN' }, -- power grade 2
 },
 ```
