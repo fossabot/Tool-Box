@@ -1,39 +1,39 @@
 CONFIG = {
-    DEBUG_MODE = true,
+    DEBUG_MODE = true, -- set default debug mode state en/disabled
 	SERVER_NAME = '5 pixel', -- your server name
-	WHITELISTED = true,
+	WHITELISTED = true, -- toggle server whitelisting
     DEFER_STRINGS = {
-        TITLE = "Welkom bij %s %s, wij maken ons klaar voor jouw avontuur.", -- msg displayed on top
+        TITLE = "Welkom bij %s %s, wij maken ons klaar voor jouw avontuur.",
         PROCESSES = {
-            "creating session", -- step 1 when connecting
-            "getting/adding data", -- step 2 when connecting
-            "storing session", -- step 3 when connecting
-            "saving session data", -- step 4 when connecting
-            "done.... joining within a few seconds", -- step 5 when connecting
+            "creating session", -- step 1
+            "getting/adding data", -- step 2
+            "storing session", -- step 3
+            "saving session data", -- step 4
+            "done.... joining within a few seconds", -- step 5
         },
-        NOT_ON_LIST = "Je moet op de whitelist staan om hier te kunnen spelen..." -- kick msg when user doesn't have a whitelist
+        NOT_ON_LIST = "Je moet op de whitelist staan om hier te kunnen spelen..." -- no whitelist
     },
 	PERMISSIONS = {
-		{ LABEL = 'BURGER', 		SHORT_NAME = 'USER' },
-		{ LABEL = 'TESTER', 		SHORT_NAME = 'TEST' },
-		{ LABEL = 'MODERATOR', 		SHORT_NAME = 'MOD' },
-		{ LABEL = 'ADMINISTRATOR', 	SHORT_NAME = 'ADMIN' },
-		{ LABEL = 'DEVELOPER', 		SHORT_NAME = 'DEV' },
+		{ LABEL = 'Burger', 		SHORT_NAME = 'USER' },
+		{ LABEL = 'Tester', 		SHORT_NAME = 'TEST' },
+		{ LABEL = 'Moderator', 		SHORT_NAME = 'MOD' },
+		{ LABEL = 'Administrator', 	SHORT_NAME = 'ADMIN' },
+		{ LABEL = 'Developer', 		SHORT_NAME = 'DEV' },
 	},
 	QUEUE = {
-		{ LABEL = 'STANDAART', 	BEHAVIOR_SCORE = 0 },
-		{ LABEL = '4e PRIO', 	BEHAVIOR_SCORE = 10 },
-		{ LABEL = '3e PRIO', 	BEHAVIOR_SCORE = 20 },
-		{ LABEL = '2e PRIO', 	BEHAVIOR_SCORE = 30 },
-		{ LABEL = '1e PRIO', 	BEHAVIOR_SCORE = 40 },
+		{ LABEL = 'Standaard', 	BEHAVIOR_SCORE = 0 },
+		{ LABEL = '4e prio', 	BEHAVIOR_SCORE = 10 },
+		{ LABEL = '3e prio', 	BEHAVIOR_SCORE = 20 },
+		{ LABEL = '2e prio', 	BEHAVIOR_SCORE = 30 },
+		{ LABEL = '1e prio', 	BEHAVIOR_SCORE = 40 },
 	}
 }
 
---[[ english config
+--[[ english
     CONFIG = {
         DEBUG_MODE = true, -- en/disable debug mode by default
         SERVER_NAME = '*server name*', -- your server name
-        WHITELISTED = true,
+        WHITELISTED = true, -- en/disable whitelisting
         DEFER_STRINGS = {
             TITLE = "Welcome to %s %s, were getting ready for your adventure.", -- msg displayed on top
             PROCESSES = {
@@ -45,19 +45,19 @@ CONFIG = {
             },
             NOT_ON_LIST = "You need to be whitelisted to join this server..." -- kick msg when user doesn't have a whitelist
         },
-        PERMISSIONS = {
-            { LABEL = 'CITIZEN', 		SHORT_NAME = 'USER' },
-            { LABEL = 'TESTER', 		SHORT_NAME = 'TEST' },
-            { LABEL = 'MODERATOR', 		SHORT_NAME = 'MOD' },
-            { LABEL = 'ADMINISTRATOR', 	SHORT_NAME = 'ADMIN' },
-            { LABEL = 'DEVELOPER', 		SHORT_NAME = 'DEV' },
+        PERMISSIONS = { -- these are all the permission levels
+            { LABEL = 'Citizen', 		SHORT_NAME = 'USER' },
+            { LABEL = 'Tester', 		SHORT_NAME = 'TEST' },
+            { LABEL = 'Moderator', 		SHORT_NAME = 'MOD' },
+            { LABEL = 'Administrator', 	SHORT_NAME = 'ADMIN' },
+            { LABEL = 'Developer', 		SHORT_NAME = 'DEV' },
         },
-        QUEUE = {
-            { LABEL = 'DEFAULT', 	BEHAVIOR_SCORE = 0 },
-            { LABEL = '4th PRIO', 	BEHAVIOR_SCORE = 10 },
-            { LABEL = '3th PRIO', 	BEHAVIOR_SCORE = 20 },
-            { LABEL = '2th PRIO', 	BEHAVIOR_SCORE = 30 },
-            { LABEL = '1th PRIO', 	BEHAVIOR_SCORE = 40 },
+        QUEUE = { -- these are all the queues for the players
+            { LABEL = 'Default', 	BEHAVIOR_SCORE = 0 },
+            { LABEL = '4th prio', 	BEHAVIOR_SCORE = 10 },
+            { LABEL = '3th prio', 	BEHAVIOR_SCORE = 20 },
+            { LABEL = '2th prio', 	BEHAVIOR_SCORE = 30 },
+            { LABEL = '1th prio', 	BEHAVIOR_SCORE = 40 },
         }
     }
-]]
+]]--
