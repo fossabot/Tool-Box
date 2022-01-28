@@ -63,6 +63,9 @@ Go to line 43, now remove or comment everything out from line 43 to line 87<br>
 ### sql
 
 ## Sources
+- [pma-voice](https://github.com/AvarianKnight/pma-voice)
 One function wihtin the debugger class is a modified function from the [pma-voice](https://github.com/AvarianKnight/pma-voice) resource.
+- [Qbus](https://github.com/qbcore-framework)
 Two functions within the datatypes class are modified functions from the [Qbus](https://github.com/qbcore-framework) framework.
+- [connectqueue](https://github.com/Nick78111/ConnectQueue)
 The player queue is handeled by a modified version of the [connectqueue](https://github.com/Nick78111/ConnectQueue) resource.
