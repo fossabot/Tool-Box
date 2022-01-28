@@ -5,14 +5,14 @@ I created the baby monitor project because i was irritated by the fact that it d
 1. **Install**
    - [**Resource Installation**](https://github.com/5m1Ly/BabyMonitor/blob/master/docs/install/install.md)
    - [**Resource Configuration**](https://github.com/5m1Ly/BabyMonitor/blob/master/docs/install/configure.md)
-2. [**Monitor**](https://github.com/5m1Ly/BabyMonitor/blob/master/docs/monitor.md)
+<!-- 2. [**Monitor**](https://github.com/5m1Ly/BabyMonitor/blob/master/docs/monitor.md)
 3. **Classes**
    - [*Datatype Class*](https://github.com/5m1Ly/BabyMonitor/blob/master/docs/classes/datatype.md)
    - [*Debug Class*](https://github.com/5m1Ly/BabyMonitor/blob/master/docs/classes/debug.md)
    - [*SQL Class*](https://github.com/5m1Ly/BabyMonitor/blob/master/docs/classes/sql.md)
    - [*Pool Class*](https://github.com/5m1Ly/BabyMonitor/blob/master/docs/classes/pool.md)
    - [*Session Class*](https://github.com/5m1Ly/BabyMonitor/blob/master/docs/classes/session.md)
-   - [*Message Class*](https://github.com/5m1Ly/BabyMonitor/blob/master/docs/classes/message.md)
+   - [*Message Class*](https://github.com/5m1Ly/BabyMonitor/blob/master/docs/classes/message.md) -->
 
 ## Sources
 1. [pma-voice](https://github.com/AvarianKnight/pma-voice)<br>
