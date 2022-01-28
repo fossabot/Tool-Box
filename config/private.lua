@@ -1,13 +1,17 @@
 CONFIG = {
-	SERVER_NAME = '5 pixel',
+	SERVER_NAME = '5 pixel', -- your server name
 	WHITELISTED = true,
-	DEFERALS_TEXT = {
-		"Welkom bij %s %s, wij maken ons klaar voor jouw avontuur.",
-		"Welkom bij %s %s, wij maken ons klaar voor jouw avontuur.",
-		"Welkom bij %s %s, wij maken ons klaar voor jouw avontuur.",
-		"Welkom bij %s %s, wij maken ons klaar voor jouw avontuur.",
-		"Welkom bij %s %s, wij maken ons klaar voor jouw avontuur."
-	},
+    DEFER_STRINGS = {
+        TITLE = "Welkom bij %s %s, wij maken ons klaar voor jouw avontuur.", -- msg displayed on top
+        PROCESSES = {
+            "creating session", -- step 1 when connecting
+            "getting/adding data", -- step 2 when connecting
+            "storing session", -- step 3 when connecting
+            "saving session data", -- step 4 when connecting
+            "done.... joining within a few seconds", -- step 5 when connecting
+        },
+        NOT_ON_LIST = "Je moet op de whitelist staan om hier te kunnen spelen..." -- kick msg when user doesn't have a whitelist
+    },
 	PERMISSIONS = {
 		{ LABEL = 'BURGER', 		SHORT_NAME = 'USER' },
 		{ LABEL = 'TESTER', 		SHORT_NAME = 'TEST' },
