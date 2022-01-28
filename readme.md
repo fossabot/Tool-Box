@@ -3,8 +3,8 @@ I created the baby monitor project because i was irritated by the fact that it d
 
 ## Documentation Contents
 - **Install**
-- [**Resource Installation**](https://github.com/5m1Ly/BabyMonitor/blob/master/docs/install/install.md)
-- [**Resource Configuration**](https://github.com/5m1Ly/BabyMonitor/blob/master/docs/install/configure.md)
+  1. [**Resource Installation**](https://github.com/5m1Ly/BabyMonitor/blob/master/docs/install/install.md)
+  2. [**Resource Configuration**](https://github.com/5m1Ly/BabyMonitor/blob/master/docs/install/configure.md)
 - [**Monitor**](https://github.com/5m1Ly/BabyMonitor/blob/master/docs/monitor.md)
 - **Classes**
   1. [*Datatype Class*](https://github.com/5m1Ly/BabyMonitor/blob/master/docs/classes/datatype.md)
