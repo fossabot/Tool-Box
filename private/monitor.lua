@@ -16,23 +16,23 @@ local function CONNECT_MONITOR(NAME, SET_KICK_REASON, DEFERRALS)
         msg:send() -- let client know we are creating a session
 		local SESSION = _SESSION:START(SOURCE, NAME) -- start a new session		
 		ACTIVE_SESSIONS:ADD_SESSION(SOURCE, SESSION) -- add the session to the active sessions pool
-		Wait(600)
+		Wait(1000)
 
 		msg:send() -- let client know we are creating its data
 		SESSION:SET_DATA() -- format the session for the client
-		Wait(900)
+		Wait(1250)
 
         msg:send() -- let client know we are update thier session in pool
 		ACTIVE_SESSIONS:SET_SESSION(SOURCE, SESSION) -- initialize the session data
-		Wait(1000)
+		Wait(1500)
 
         msg:send() -- let client know we are now about to save thier data
 		SESSION:SAVE_DATA() -- save the session data
-		Wait(600)
+		Wait(1250)
 
 		if (CONFIG.WHITELISTED and SESSION.QUEUE.WHITELISTED) or not CONFIG.WHITELISTED then
             msg:send() -- let client know we are now ready and that they will join within a few secconds
-			Wait(100000)
+			Wait(2500)
 			exports.connectqueue:SEND_TO_QUEUE(SOURCE, NAME, SET_KICK_REASON, DEFERRALS)
 		else
 			DEFERRALS.done(CFG.DEFER_MSGS.NOT_ON_LIST)
