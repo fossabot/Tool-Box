@@ -13,8 +13,6 @@ local function CONNECT_MONITOR(NAME, SET_KICK_REASON, DEFERRALS)
         local msg = _messages:new(NAME, DEFERRALS)
         Wait(10)
 
-        DEBUG:LOG(msg)
-
         msg:send() -- let client know we are creating a session
 		local SESSION = _SESSION:START(SOURCE, NAME) -- start a new session		
 		ACTIVE_SESSIONS:ADD_SESSION(SOURCE, SESSION) -- add the session to the active sessions pool
