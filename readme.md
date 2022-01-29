@@ -16,7 +16,7 @@ I created the baby monitor project because i was irritated by the fact that it d
 
 ## Sources
 1. [pma-voice](https://github.com/AvarianKnight/pma-voice)<br>
-  One function within the debugger class is a modified function from the [pma-voice](https://github.com/AvarianKnight/pma-voice) resource.
+  One function within the debug class is a modified function from the [pma-voice](https://github.com/AvarianKnight/pma-voice) resource.
 
 1. [qbcore-framework](https://github.com/qbcore-framework)<br>
   Two functions within the datatypes class are modified functions from the [Qbus](https://github.com/qbcore-framework) framework.
