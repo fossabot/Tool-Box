@@ -1,5 +1,5 @@
 # 👶 Baby Monitor 👶
-I created the baby monitor project because i was irritated by the fact that it doesn't matter if you use the qbcore-framework or esx framework, at the end of the day it doesn't link nor seperates client and character data that well. With that being said i went out of my way to solve this problem, this was important for me and probably for you because this is an absolute core mechanic for any server whether it is focused on roleplay, combat, racing or just playing for fun almost everyone has this mechanic within the server. If you don't have this mechanic within your server it probably would be a good thing to use anyway just look at the way identifiers are saved 😉.
+I created the baby monitor project because i was irritated by the fact that it doesn't matter if you use the qbcore-framework or esx framework, at the end of the day it doesn't link nor seperates client and character data that well. With that being said i went out of my way to solve this problem, this was important for me and probably for you because this is an absolute core mechanic for any server whether it is focused on roleplay, combat, racing or just playing for fun almost everyone has this mechanic or a similar one within their server 😉.
 
 ## Documentation Contents
 1. **Install**
