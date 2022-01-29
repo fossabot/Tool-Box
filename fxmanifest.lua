@@ -8,25 +8,34 @@ discord 'Sm1Ly#1111'
 github 'https://github.com/5m1Ly'
 description 'Keep track of client data on the server side using 1 identifier related to all owned and previously owend identifiers'
 
-server_scripts {
+-- load sql library
+server_script '@oxmysql/lib/MySQL.lua'
 
-	-- load sql library
-	'@oxmysql/lib/MySQL.lua',
-
+shared_scripts {
+    
 	-- load config
-	'config/private.lua',
-
-	-- load files which hold classes for the monitoring process
-	'private/classes/__types.lua',
-	'private/classes/__debug.lua',
-	'private/classes/__sql.lua',
-	'private/classes/__pool.lua',
-	'private/classes/__session.lua',
-	'private/classes/__msg.lua',
-
-	-- load files which monitor the client data
-	'private/monitor.lua'
+	'shared/config.lua',
 
 }
 
-dependency 'connectqueue'
+server_scripts {
+
+	-- load core class mimics
+	'private/classes/core/__types.lua',
+	'private/classes/core/__debug.lua',
+	'private/classes/core/__sql.lua',
+
+	-- load feature class mimics
+	'private/classes/feature/__pool.lua',
+	'private/classes/feature/__session.lua',
+	'private/classes/feature/__msg.lua',
+
+	-- load handlers
+	'private/handlers/connection.lua'
+
+}
+
+dependencies {
+    'oxmysql',
+    'connectqueue'
+}
