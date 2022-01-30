@@ -1,6 +1,6 @@
-DT = {}
+_DT = {}
 
-function DT:TABLE_LENGTH(tbl)
+function _DT:TABLE_LENGTH(tbl)
 	local ret = 0
 	for k, v in pairs(tbl) do
 		ret = ret + 1
@@ -8,7 +8,7 @@ function DT:TABLE_LENGTH(tbl)
 	return ret
 end
 
-function DT:GENERATE_ID(LENGTH)
+function _DT:GENERATE_ID(LENGTH)
 	if LENGTH <= 0 then return '' end
 	local rand = math.random(0, 1)
 	local retval = nil
@@ -18,10 +18,10 @@ function DT:GENERATE_ID(LENGTH)
 		local i = math.random(64, 90)
 		retval = string.char((i == 64 and math.random(97, 122) or i)):upper()
 	end
-	return DT:GENERATE_ID(LENGTH - 1) .. retval
+	return _DT:GENERATE_ID(LENGTH - 1) .. retval
 end
 
-function DT:STRING_SPLIT(str, delimiter)
+function _DT:STRING_SPLIT(str, delimiter)
     local result = {}
     local from = 1
     local delim_from, delim_to = string.find(str, delimiter, from)

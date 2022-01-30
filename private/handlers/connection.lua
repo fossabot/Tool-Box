@@ -5,8 +5,8 @@ RegisterNetEvent("toggle:debug-mode", function()
 end)
 
 -- creating pools for active and inactive sessions
-ACTIVE_SESSIONS = _POOL:CREATE()
-INACTIVE_SESSIONS = _POOL:CREATE()
+ACTIVE_SESSIONS = _POOL:INIT()
+INACTIVE_SESSIONS = _POOL:INIT()
 
 local function CONNECT_MONITOR(NAME, SET_KICK_REASON, DEFERRALS)
 
@@ -16,34 +16,34 @@ local function CONNECT_MONITOR(NAME, SET_KICK_REASON, DEFERRALS)
 	-- check if session exists within pool for the client (note: added cus somehow the connecting event triggered twice)
 	if ACTIVE_SESSIONS.POOL[SOURCE] == nil then
 
-        local msg = _messages:new(NAME, DEFERRALS)
+        local MSG = _MESSAGES:INIT(NAME, DEFERRALS)
         Wait(10)
 
-        msg:send() -- let client know we are creating a session
-		local SESSION = _SESSION:START(SOURCE, NAME) -- start a new session		
+        MSG:SEND() -- let client know we are creating a session
+		local SESSION = _SESSION:INIT(SOURCE, NAME) -- start a new session		
 		ACTIVE_SESSIONS:ADD_SESSION(SOURCE, SESSION) -- add the session to the active sessions pool
 		Wait(1000)
 
         DEBUG:LOG(SESSION, "Connect Monitor Function", "info")
 
-		msg:send() -- let client know we are creating its data
+		MSG:SEND() -- let client know we are creating its data
 		SESSION:SET_DATA() -- format the session for the client
 		Wait(1250)
 
-        msg:send() -- let client know we are update thier session in pool
+        MSG:SEND() -- let client know we are update thier session in pool
 		ACTIVE_SESSIONS:SET_SESSION(SOURCE, SESSION) -- initialize the session data
 		Wait(1500)
 
-        msg:send() -- let client know we are now about to save thier data
+        MSG:SEND() -- let client know we are now about to save thier data
 		SESSION:SAVE_DATA() -- save the session data
 		Wait(1250)
 
 		if (CONFIG.WHITELISTED and SESSION.QUEUE.WHITELISTED) or not CONFIG.WHITELISTED then
-            msg:send() -- let client know we are now ready and that they will join within a few secconds
+            MSG:SEND() -- let client know we are now ready and that they will join within a few secconds
 			Wait(2500)
-			exports.connectqueue:SEND_TO_QUEUE(SOURCE, NAME, SET_KICK_REASON, DEFERRALS)
+			exports.BabyMonitor:SEND_TO_QUEUE(SOURCE, NAME, SET_KICK_REASON, DEFERRALS)
 		else
-			DEFERRALS.done(CFG.DEFER_MSGS.NOT_ON_LIST)
+			DEFERRALS.DONE(CFG.DEFER_MSGS.NOT_ON_LIST)
 		end
 
 	end

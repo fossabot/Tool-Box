@@ -1,7 +1,7 @@
 -- A class mimic to handel session data within a pool
 _POOL = {}
 
-function _POOL:CREATE()
+function _POOL:INIT()
 	local _TABLE = {
 		POOL = {}
 	}

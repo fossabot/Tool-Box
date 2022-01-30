@@ -1,7 +1,13 @@
-CONFIG = {
+local CFG = {
     DEBUG_MODE = true, -- set default debug mode state en/disabled
 	SERVER_NAME = '5 pixel', -- your server name
 	WHITELISTED = true, -- toggle server whitelisting
+    SERVER = {
+        NAME = '5 pixel', -- your server name
+        MAX_PLAYERS = GetConvarInt("sv_maxclients", 30), -- your server name
+        DEBUG_MODE = true, -- set default debug mode state en/disabled
+        WHITELISTED = true, -- toggle server whitelisting
+    },
     DEFER_STRINGS = {
         TITLE = "Welkom bij %s %s, wij maken ons klaar voor jouw avontuur.",
         PROCESSES = {
@@ -21,16 +27,21 @@ CONFIG = {
 		{ LABEL = 'Developer', 		SHORT_NAME = 'DEV' },
 	},
 	QUEUE = {
-		{ LABEL = 'Standaard', 	BEHAVIOR_SCORE = 0 },
-		{ LABEL = '4e prio', 	BEHAVIOR_SCORE = 10 },
-		{ LABEL = '3e prio', 	BEHAVIOR_SCORE = 20 },
-		{ LABEL = '2e prio', 	BEHAVIOR_SCORE = 30 },
-		{ LABEL = '1e prio', 	BEHAVIOR_SCORE = 40 },
+        LISTS = {
+            { LABEL = 'Standaard', 	BEHAVIOR_SCORE = 0 },
+            { LABEL = '4e prio', 	BEHAVIOR_SCORE = 10 },
+            { LABEL = '3e prio', 	BEHAVIOR_SCORE = 20 },
+            { LABEL = '2e prio', 	BEHAVIOR_SCORE = 30 },
+            { LABEL = '1e prio', 	BEHAVIOR_SCORE = 40 },
+        },
+        INFO = {
+            JOIN_DELAY = 30000
+        }
 	}
 }
 
 --[[ english
-    CONFIG = {
+    local CFG = {
         DEBUG_MODE = true, -- en/disable debug mode by default
         SERVER_NAME = '*server name*', -- your server name
         WHITELISTED = true, -- en/disable whitelisting
@@ -61,3 +72,25 @@ CONFIG = {
         }
     }
 ]]--
+
+CONFIG = {}
+
+function CONFIG:INIT(SPECIFIER)
+
+    SPECIFIER = type(SPECIFIER) == 'table' and SPECIFIER or { SPECIFIER }
+
+    local RETVAL = {}
+
+    if SPECIFIER == nil then RETVAL = CFG else
+        for I = 1, #SPECIFIER do
+            local CURRENT = SPECIFIER[I]
+            RETVAL[CURRENT] = CFG[CURRENT]
+        end
+    end
+
+    setmetatable(RETVAL, self)
+	self.__index = self
+
+    return RETVAL
+
+end

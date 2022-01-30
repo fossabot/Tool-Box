@@ -1,4 +1,4 @@
-_sql = {}
+_SQL = {}
 
 local EXEC_FUNCTIONS = {
     ['SYNC-INSERT'] = MySQL.Sync.insert,
@@ -12,7 +12,7 @@ local EXEC_FUNCTIONS = {
 }
 
 -- function to use sql
-function _sql:assign(TBL)
+function _SQL:INIT(TBL)
     local TBL = {
         Q = "",
         D = {},
@@ -25,9 +25,9 @@ end
 
 -- function to prepare the query for execution
 ---@param QUERY string - query starting with 'SYNC' or 'ASYNC'
-function _sql:query(QUERY)
+function _SQL:QUERY(QUERY)
     -- split the query on space
-    local QSPLIT = DT:STRING_SPLIT(QUERY, " ")
+    local QSPLIT = _DT:STRING_SPLIT(QUERY, " ")
     -- check if query contains sync or async
     if QSPLIT[1] == "SYNC" or QSPLIT[1] == "ASYNC" then
         -- remove the sync or async then we get an executeble query
@@ -43,7 +43,7 @@ end
 
 -- function to prepare the query for execution
 ---@param DATA table - table containing data to be processed for execution
-function _sql:data(DATA)
+function _SQL:DATA(DATA)
     if DATA ~= nil and type(DATA) == "table" then
         self.D = {} -- empty the table, important so dont touch
         for KEY, VALUE in pairs(DATA) do
@@ -61,11 +61,9 @@ end
 
 -- function to prepare the query for execution
 ---@param CB function - callback function with the result as parameter
-function _sql:exec(CB)
+function _SQL:EXEC(CB)
 	-- now execute the query by selecting a function
     local RESULT = self.F(self.Q, self.D)
     -- return data within callback or just a return
     if CB ~= nil then CB(RESULT) else return RESULT end
 end
-
-exports('_sql', _sql)

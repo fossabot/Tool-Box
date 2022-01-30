@@ -13,10 +13,6 @@ function _DEBUG:TOGGLE()
     print('DEBUG MODE TURNED '..( not self.active and '^1OFF^0' or '^2ON^0' ))
 end
 
-RegisterCommand("debug-mode", function()
-    TriggerEvent("toggle:debug-mode")
-end)
-
 -- 2 functions for setting console colors
 -- rgb(red, green, blue)
 function _DEBUG:RGB(RED, GREEN, BLUE)
@@ -43,7 +39,7 @@ function _DEBUG:PRINT(_TABLE, _INDENT)
 		local TABSPACE = string.rep("    ", _INDENT)
         local KEY = ("%s^3%s^0"):format(TABSPACE, INDEX)
         if TYPE == "table" then
-			local length = DT:TABLE_LENGTH(VALUE)
+			local length = _DT:TABLE_LENGTH(VALUE)
 			if length > 0 then
 				print(("%s^3 (^5#%d^3): ^4{^0"):format(KEY, length))
 				self:PRINT(VALUE, _INDENT + 1)
@@ -70,7 +66,13 @@ function _DEBUG:LOG(_TABLE, _SOURCE, _COLOR)
     _COLOR = _COLOR ~= nil and _COLOR or "primary"
     local COLOR = self:COLOR(_COLOR)
     local SRC_COLOR = self:COLOR('data')
+    _SOURCE = _SOURCE ~= nil and _SOURCE or "debugger"
     print(COLOR.."DEBUG:LOG TRIGGERED FROM "..SRC_COLOR.._SOURCE.."^0")
     self:PRINT(_TABLE)
     print(COLOR.."DEBUG:LOG TRIGGERED FROM "..SRC_COLOR.._SOURCE.."^0")
 end
+
+
+RegisterCommand("debug-mode", function()
+    TriggerEvent("toggle:debug-mode")
+end)

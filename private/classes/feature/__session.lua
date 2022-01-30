@@ -1,7 +1,7 @@
 _SESSION = {}
 
 -- set default data for a session
-function _SESSION:START(_SOURCE, _NAME)
+function _SESSION:INIT(_SOURCE, _NAME)
 	-- session data template
 	DATA = {
 		TEMP_SOURCE = _SOURCE,
@@ -70,15 +70,15 @@ function _SESSION:SET_DATA()
 	-- check if an inactive session is found
 	if INACTIVE_SESSION ~= nil then
 
-        local checker = _sql:assign()
-        checker:query('SYNC SELECT COUNT(*) as count FROM clients WHERE client_id = ?')
+        local SQL = _SQL:INIT()
+        SQL:QUERY('SYNC SELECT COUNT(*) as count FROM clients WHERE client_id = ?')
 
         local function newId()
 
             local id = 'RPX-'..DT:GENERATE_ID(10)
 
-            checker:data({ id })
-            local res = checker:exec()
+            SQL:DATA({ id })
+            local res = SQL:EXEC()
 
             return res.count > 0 and newId() or id
 
@@ -117,14 +117,14 @@ function _SESSION:SET_DATA()
 
 		self.IDENTIFIERS = NEW_IDS
 
-        local sql = _sql:assign()
-        sql:query('SYNC SELECT * FROM clients WHERE identifiers LIKE ?')
+        local SQL = _SQL:INIT()
+        SQL:QUERY('SYNC SELECT * FROM clients WHERE identifiers LIKE ?')
 
 		for _TYPE, _IDS in pairs(self.IDENTIFIERS) do	
 			for i = 1, #_IDS do
                 
-                sql:data({ '%'.._IDS[i]..'%' })
-				SAVED_CLIENT_DATA = sql:exec()
+                SQL:DATA({ '%'.._IDS[i]..'%' })
+				SAVED_CLIENT_DATA = SQL:EXEC()
 			
                 if SAVED_CLIENT_DATA[1] ~= nil then break end
 			
@@ -187,10 +187,10 @@ end
 -- save session in the data base
 function _SESSION:SAVE_DATA()
 
-    local sql = _sql:assign()
-    sql:query('ASYNC INSERT INTO clients (client_id, name, info, perms, queue, identifiers) VALUES (:clientId, :name, :info, :perms, :queue, :identifiers) ON DUPLICATE KEY UPDATE name = :name, info = :info, perms = :perms, queue = :queue, identifiers = :identifiers')
+    local SQL = _SQL:INIT()
+    SQL:QUERY('ASYNC INSERT INTO clients (client_id, name, info, perms, queue, identifiers) VALUES (:clientId, :name, :info, :perms, :queue, :identifiers) ON DUPLICATE KEY UPDATE name = :name, info = :info, perms = :perms, queue = :queue, identifiers = :identifiers')
 
-	sql:data({
+	SQL:DATA({
 		clientId = self.CLIENT_ID,
 		name = self.NAME,
 		info = self.INFORMATION,
@@ -199,6 +199,6 @@ function _SESSION:SAVE_DATA()
 		identifiers = self.IDENTIFIERS
 	})
 
-    sql:exec()
+    SQL:EXEC()
 
 end

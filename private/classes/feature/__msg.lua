@@ -1,17 +1,17 @@
-_messages = {}
+_MESSAGES = {}
 
 -- set
-function _messages:new(name, deferrals)
+function _MESSAGES:INIT(NAME, DEFERRALS)
 
-    deferrals.defer()
+    DEFERRALS.defer()
 
     local tbl = {
-        update = deferrals.update,
-        done = deferrals.done,
+        UPDATE = DEFERRALS.update,
+        DONE = DEFERRALS.done,
         welcome = CONFIG.DEFER_STRINGS.TITLE,
         is_welcome_set = false,
         server = CONFIG.SERVER_NAME,
-        client_name = name,
+        client_name = NAME,
         processes = {
             messages = CONFIG.DEFER_STRINGS.PROCESSES,
             amount = #CONFIG.DEFER_STRINGS.PROCESSES,
@@ -32,7 +32,7 @@ function _messages:new(name, deferrals)
 end
 
 -- function calculate the current progression
-function _messages:progression()
+function _MESSAGES:PROGRESSION()
 
     self.processes.current = self.processes.current + 1
     self.progress.percentage = (100 / self.processes.amount) * self.processes.current
@@ -44,8 +44,7 @@ function _messages:progression()
 end
 
 -- function to create build the message
-function _messages:build()
-
+function _MESSAGES:BUILD()
 
     self.progress.string = ('[%s%s] '):format(
         string.rep('/', self.progress.per),
@@ -68,8 +67,8 @@ function _messages:build()
 end
 
 -- function to update the the deferrals
-function _messages:send()
-    self:progression()
-    local msg = self:build()
-    self.update(msg)
+function _MESSAGES:SEND()
+    self:PROGRESSION()
+    local msg = self:BUILD()
+    self.UPDATE(msg)
 end

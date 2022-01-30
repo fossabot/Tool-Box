@@ -1,7 +1,7 @@
 fx_version 'cerulean'
 game 'gta5'
 
-version '0.6.7'
+version '0.8.4'
 
 author 'Sm1Ly'
 discord 'Sm1Ly#1111'
@@ -29,13 +29,17 @@ server_scripts {
 	'private/classes/feature/__pool.lua',
 	'private/classes/feature/__session.lua',
 	'private/classes/feature/__msg.lua',
+	'private/classes/feature/__queue.lua',
 
-	-- load handlers
-	'private/handlers/connection.lua'
+	-- load api
+    'private/classes/api.lua',
+
+	-- load feature modules
+	'private/handlers/connection.lua',
+    'private/handlers/queue.lua'
 
 }
 
-dependencies {
-    'oxmysql',
-    'connectqueue'
-}
+client_script 'private/handlers/queue.lua'
+
+dependency 'oxmysql'
