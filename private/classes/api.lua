@@ -1,5 +1,3 @@
-local config = CONFIG:INIT()
-
 Monitor = {}
 
 function Monitor:API()
