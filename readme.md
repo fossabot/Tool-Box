@@ -1,4 +1,6 @@
 # Tool Box 🧠
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2F5m1Ly%2FTool-Box.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2F5m1Ly%2FTool-Box?ref=badge_shield)
+
 I created the Tool Box project because i was irritated by the fact that it doesn't matter if you use the qbcore-framework or esx framework, at the end of the day it doesn't link nor seperates client and charactr data that well. With that being said i went out of my way to solve this problem, this was important for me and probably for you because this is an absolute core mechanic for any server whether it is focused on roleplay, combat, racing or just playing for fun almost everyone has this mechanic or a similar one within their server 😉.
 
 ## Documentation Contents
@@ -23,3 +25,6 @@ I created the Tool Box project because i was irritated by the fact that it doesn
 
 1. [connectqueue](https://github.com/Nick78111/ConnectQueue)<br>
   The player queue is handeled by a modified version of the [connectqueue](https://github.com/Nick78111/ConnectQueue) resource.
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2F5m1Ly%2FTool-Box.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2F5m1Ly%2FTool-Box?ref=badge_large)
