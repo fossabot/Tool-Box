@@ -14,32 +14,16 @@ server_script '@oxmysql/lib/MySQL.lua'
 shared_scripts {
     
 	-- load config
-	'shared/config.lua',
+	'config/config.lua',
+	'config/config.class.lua',
 
 }
 
 server_scripts {
 
 	-- load core class mimics
-	'private/classes/core/__types.lua',
-	'private/classes/core/__debug.lua',
-	'private/classes/core/__sql.lua',
-
-	-- load feature class mimics
-	'private/classes/feature/__pool.lua',
-	'private/classes/feature/__session.lua',
-	'private/classes/feature/__msg.lua',
-	'private/classes/feature/__queue.lua',
-
-	-- load api
-    'private/classes/api.lua',
-
-	-- load feature modules
-	'private/handlers/connection.lua',
-    'private/handlers/queue.lua'
-
+	'src/test.lua',
+    
 }
-
-client_script 'private/handlers/queue.lua'
 
 dependency 'oxmysql'
