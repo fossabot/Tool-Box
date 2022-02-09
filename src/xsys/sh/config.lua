@@ -1,3 +1,20 @@
+Cfg = {
+    System = {
+        Info = {
+            name = '5 Pixel',
+            max_clients = 0,
+            debug_mode = false,
+        },
+        Perms = {
+            { id = 'user',  label = 'Burger' },
+            { id = 'mod',   label = 'Moderator' },
+            { id = 'admin', label = 'Administrator' },
+            { id = 'dev',   label = 'Developer' },
+        }
+    }
+}
+
+-- handles the config and makes sure it can't be edited
 function GetConfig(tbl)
     return setmetatable(tbl or Cfg, {
         __index = function(self, key)
