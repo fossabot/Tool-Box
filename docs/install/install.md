@@ -5,7 +5,7 @@
     - version 1.9.3 of oxmysql | [download ->](https://github.com/overextended/oxmysql)
 
 2. **Download**<br>
-    - Download the latest version of BabyMonitor, i strongly advice you to create a local git repo and clone it so you can easily update to the latest features.<br>
+    - Download the latest version of The X System, i strongly advice you to create a local git repo and clone it so you can easily update to the latest features.<br>
     - [new with git?](https://www.youtube.com/watch?v=8JJ101D3knE)
 
 3. **Setup Connectqueue**<br>
