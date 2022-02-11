@@ -1,5 +1,12 @@
 function identifiers(src)
 
+    local function randomStr(length)
+        if length <= 0 then return '' end
+        local i = math.random(1, 2)
+        local j = math.random(1, 2)
+        return randomStr(length - 1) .. string.char(i == 2 and (j == 2 and math.random(97, 122) or math.random(48, 57)) or math.random(65, 90))
+    end
+
     local function split(str, delimiter)
         local result = {}
         local from = 1
@@ -14,6 +21,7 @@ function identifiers(src)
     end
 
     local ids = setmetatable({
+        client_id = '',
         ip = {},
         xbl = {},
         live = {},
@@ -53,11 +61,39 @@ function identifiers(src)
         __metatable = nil
     })
 
+    local sql = __sql()
+    sql:query('SYNC SELECT client_id, identifiers FROM clients WHERE identifiers LIKE ?')
+
+    local found = false
+    local data = {}
+
     local currentIds = GetPlayerIdentifiers(src)
     for i = 1, #currentIds, 1 do
         local id = split(currentIds[i], ':')
+        if not found then
+            sql:prepare({ '%'..id[2]..'%' })
+            local result = sql()
+            if result[1] ~= nil then
+                found = true
+                result[1].identifiers = json.decode(result[1].identifiers)
+                data = result[1]
+            end
+        end
         ids(id[1], id[2])
     end
 
+    if not found then
+        ids.client_id = 'pxl-'..randomStr(10)
+    else
+        ids.client_id = data.client_id
+        for type, content in pairs(data.identifiers) do
+            for i = 1, #content, 1 do
+                -- print(type, content[i])
+                ids(type:lower(), content[i])
+            end
+        end
+    end
+
     return ids
+
 end
