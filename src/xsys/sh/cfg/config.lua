@@ -3,7 +3,7 @@ Cfg = {
         Info = {
             name = '5 Pixel',
             max_clients = 0,
-            debug_mode = false,
+            debug_mode = true,
         },
         Perms = {
             { id = 'user',  label = 'Burger' },

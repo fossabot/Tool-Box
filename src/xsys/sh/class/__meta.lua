@@ -1,3 +1,12 @@
+-- __len metamethod
+function FullTableLength(self)
+    local length = 0
+    for _ in pairs(self) do
+        length = length + 1
+    end
+    return length
+end
+
 -- __tostring metamethod
 function ToStringDebugger(self)
 
