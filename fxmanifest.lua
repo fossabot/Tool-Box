@@ -8,25 +8,20 @@ discord 'Sm1Ly#1111'
 github 'https://github.com/5m1Ly'
 description 'Keep track of client data on the server side using 1 identifier related to all owned and previously owend identifiers'
 
--- // load Shared Sync System \\
+-- // load Shared Data \\
 shared_scripts {
-    'src/xsys/sh/cfg/config.lua',
-    'src/xsys/sh/class/__meta.lua',
-    'src/xsys/sh/class/bucket.lua',
-    'src/xsys/sh/xsys.lua',
-    'src/xsys/sh/sync.lua',
+    'src/shared/main.lua',
 }
 
--- // load Server System \\
+-- // load Server Side \\
 server_scripts {
     '@oxmysql/lib/MySQL.lua',
-	'src/xsys/sv/class/*.lua',
-	'src/xsys/sv/xsys.lua'
+	'src/server/main.lua'
 }
 
--- // load Client System \\
+-- // load Client Side \\
 client_scripts {
-	'src/xsys/cl/xsys.lua'
+	'src/client/main.lua'
 }
 
 dependency 'oxmysql'

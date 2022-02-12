@@ -1,13 +1,3 @@
-local DEBUG = _DEBUG:INIT()
-
-RegisterNetEvent("toggle:debug-mode", function()
-    DEBUG:TOGGLE()
-end)
-
--- creating pools for active and inactive sessions
-ACTIVE_SESSIONS = _POOL:INIT()
-INACTIVE_SESSIONS = _POOL:INIT()
-
 local function CONNECT_MONITOR(NAME, SET_KICK_REASON, DEFERRALS)
 
 	local SOURCE = tonumber(source)
