@@ -198,10 +198,59 @@ xSys.core.class.sql = function()
 
 end
 
--- higher order functions
-xSys.core.functions = {}
+-- handle player permissions
+xSys.core.class.permissions = function(data)
 
-xSys.core.functions.identifiers = function(src)
+    local cfg = GetConfig()("system")("perms")
+    local perms = {}
+
+    perms.level = data.level or 1
+    perms.label = cfg[data.level or 1].label
+    perms.ssn = data.ssn or ''
+    perms.optin = false
+
+    perms.set = function(self, level, by)
+        by = type(by) ~= 'number' and (type(by) == 'table' and by.level or #cfg) or by
+        self.level = self.level < by and level or self.level
+        return self
+    end
+
+    perms.setSsn = function(self, ssn, by)
+        self.ssn = self.level < by and ssn or self.ssn
+        return self
+    end
+
+    perms.check = function(self, required)
+        if type(required) == 'string' then
+            local found = false
+            for k, v in pairs(cfg.perms) do
+                if (v.id or v.label) == required then
+                    found = true
+                    required = k;
+                    break
+                end
+            end
+            if not found then required = 1 end
+        end
+        return self.level >= required and self.optin or false
+    end
+
+    perms.toggleOptin = function(self, ssn)
+        self.optin = self.ssn == ssn and true or false
+        return self
+    end
+
+    perms.__call = function(self, action, ...)
+        local retval = action == "set" and self.set(self, ...) or ( action == "check" and self.check(self, ...) or ( action == "snn" and self.setSsn(self, ...) or ( action == "optin" and self.toggleOptin(self, ...) or false ) ) )
+        return retval
+    end
+    perms.__tostring = xSys.core.meta.debug
+
+    return setmetatable({}, perms)
+
+end
+
+xSys.core.class.identifiers = function(src)
 
     local function randomStr(length)
         if length <= 0 then return '' end
@@ -265,7 +314,7 @@ xSys.core.functions.identifiers = function(src)
     })
 
     local sql = xSys.core.class.sql()
-    sql:query('SYNC SELECT client_id, identifiers FROM clients WHERE identifiers LIKE ?')
+    sql:query('SYNC SELECT * FROM clients WHERE identifiers LIKE ?')
 
     local found = false
     local data = {}
@@ -297,81 +346,63 @@ xSys.core.functions.identifiers = function(src)
         end
     end
 
-    return ids
+    return ids, data
 
 end
 
 -- data storage system that stores created user data
 xSys.storage = {}
-xSys.storage.bins = {}
+
+xSys.storage.bins = setmetatable({}, {
+    __tostring = xSys.core.meta.debug
+})
 
 -- function to manage data bins
-xSys.storage.manage = function(name, action, key, data)
+xSys.storage.manage = function(name, action, key, data, oldKey)
     
     if xSys.storage.bins[name] == nil then
         
         -- when bin doesn't exist create it
         xSys.storage.bins[name] = setmetatable({
-            name = '',
+            name = name,
             bin = {}
         }, {
-
             __index = function(self, key)
-
                 if self.bin[key] == nil then
-
                     print('STORAGE:INFO | tried fetching non-existent data from the '..self.name..' storage bin')
-
                 else
-
                     print('STORAGE:INFO | fetched data from the '..self.name..' storage bin')
-
                     return self.bin[key]
-
                 end
-
             end,
             __newindex = function(self, key, value)
-
                 if self.bin[key] == nil then
-
                     print('STORAGE:INFO | someone added something to the '..self.name..' storage bin (key: '..key..', key: '..value..')')
-
                 else
-
                     print('STORAGE:INFO | someone changed somethin in the '..self.name..' storage bin (key: '..key..', key: '..value..')')
-
                 end
-
             end,
-            __call = function(self, action, key, data)
+            __call = function(self, action, key, data, oldKey)
+                key = tostring(key)
+                oldKey = tostring(oldKey)
 
+                print(key, oldKey)
                 if type(action) == 'string' then
-
                     if action == 'set' and (key and data) ~= nil then
-
                         self.bin[key] = data
-
                     elseif action == 'get' and (key and self.bin[key]) ~= nil then
-
                         return self.bin[key]
-
+                    elseif action == 'move' and (key and self.bin[oldKey]) ~= nil then
+                        self.bin[oldKey] = nil
+                        self.bin[key] = data
                     elseif action == 'del' and (key and self.bin[key]) ~= nil then
-
                         self.bin[key] = nil
-
                     else
-
-                        print('^1STORAGE:ERROR | bin: ^6'..self.name..'^1 | action string should equal "set", "get" or "del", got "'..action..'" instead!^0')
-
+                        print('^1STORAGE:ERROR | bin: ^6'..self.name..'^1 | action string should equal "set", "get", "move" or "del", got "'..action..'" instead!^0')
                     end
-
                 else
-
                     print('^1STORAGE:ERROR | bin: ^6'..self.name..'^1 | action needs to be a string, got "'..type(action)..'" instead!^0')
-
                 end
-
             end,
             __len = xSys.core.meta.length,
             __tostring = xSys.core.meta.debug,
@@ -381,7 +412,7 @@ xSys.storage.manage = function(name, action, key, data)
         -- check if data is given and add if it is
         if (action and key and data) ~= nil then
 
-            xSys.storage.bins[name](action, key, data)
+            xSys.storage.bins[name](action, key, data, oldKey)
 
         end
 
@@ -390,7 +421,7 @@ xSys.storage.manage = function(name, action, key, data)
         -- check if action is equal to del if so, check if bin is empty if so, delete the bin
         if action == 'del' then
 
-            xSys.storage.bins[name](action, key, data)
+            xSys.storage.bins[name](action, key)
     
             if  xSys.core.meta.length( xSys.storage.bins[name].bin ) == 0 then
 
@@ -400,10 +431,14 @@ xSys.storage.manage = function(name, action, key, data)
 
         elseif  action == 'get' then
 
-            local retval = xSys.storage.bins[name](action, key, data)
+            local retval = xSys.storage.bins[name](action, key, data, oldKey)
 
             return retval
 
+        else
+
+            xSys.storage.bins[name](action, key, data, oldKey)
+        
         end
 
     end
@@ -413,19 +448,25 @@ end
 -- functions that interact with the core classes / functions
 
 -- functions returning class mimics
-xSys.users = {} 
+xSys.users = {}
 
 xSys.users.create = function(tempId, name)
+
+    local ids, data = xSys.core.class.identifiers(tempId)
+    local perms = xSys.core.class.perms(data.perms)
+    
     return setmetatable({
         name = name,
         id = {
             server = 0,
             temp = tempId,
         },
-        identifiers = xSys.core.functions.identifiers(tempId),
+        identifiers = ids,
+        permissions = perms,
     }, {
         __tostring = xSys.core.meta.debug
     })
+
 end
 
 -- functions used for connecting
@@ -436,24 +477,42 @@ xSys.connect.conn = function(name, kick, deferrals)
     local tempId = source
     local user = xSys.users.create(tempId, name)
 
-    print(user)
+    xSys.storage.manage('users', 'set', tempId, user)
 
 end
 
 xSys.connect.join = function(tempId)
-    --
+
+    local serverId = source
+    local user = xSys.storage.manage('users', 'get', tempId)
+
+    user.id.server = serverId
+
+    xSys.storage.manage('users', 'move', serverId, user, tempId)
+
 end
 
-xSys.connect.drop = function(id)
-    --
+xSys.connect.drop = function(reason)
+
+    local src = source
+    local user = xSys.storage.manage('users', 'get', src)
+
+    if user ~= nil then
+
+        xSys.storage.manage('users', 'del', src)
+
+    end
+
 end
 
--- set copple of metamethods
-xSys.__index = xSys
-xSys.__tostring = xSys.core.meta.debug
+-- xSystem metamethods
+xSys = setmetatable(xSys, {
+    __index = xSys,
+    __tostring = xSys.core.meta.debug
+})
 
--- make the table a class mimic
-xSys = setmetatable({}, xSys)
+-- print to check if everything is set within
+print(xSys)
 
 -- trigger the correct system functions when the player triggered one of the events underneath
 AddEventHandler('playerConnecting', xSys.connect.conn)

@@ -1,11 +1,11 @@
-Cfg = {
-    System = {
-        Info = {
+Config = {
+    system = {
+        info = {
             name = '5 Pixel',
             max_clients = 0,
             debug_mode = true,
         },
-        Perms = {
+        perms = {
             { id = 'user',  label = 'Burger' },
             { id = 'mod',   label = 'Moderator' },
             { id = 'admin', label = 'Administrator' },
@@ -16,7 +16,7 @@ Cfg = {
 
 -- handles the config and makes sure it can't be edited
 function GetConfig(tbl)
-    return setmetatable(tbl or Cfg, {
+    return setmetatable(tbl or Config, {
         __index = function(self, key)
             if self.ids[key] ~= nil then
                 return self.ids[key]
@@ -33,6 +33,7 @@ function GetConfig(tbl)
         end,
         __call = function(self, key)
             local retval
+            key = key:lower()
             if self[key] ~= nil then
                 local retval
                 if type(self[key]) == 'table' then
